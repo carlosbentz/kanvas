@@ -8,45 +8,39 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from ipdb import set_trace
 from django.db import IntegrityError
-
-
+from .serializers import UserSerializer, LoginSerializer
 
 
 class SignupView(APIView):
     def post(self, request):
+        data = request.data
+        user = UserSerializer(data=data)
+
+        if not user.is_valid():
+            return Response(user.errors, status=status.HTTP_400_BAD_REQUEST)
+
         try:
-            user = User.objects.create_user(
-                username=request.data['username'], 
-                password=request.data['password'],
-                is_staff=request.data.pop('is_staff', False),
-                is_superuser=request.data.pop("is_superuser", False)
-            )
+            user = User.objects.create_user(**user.validated_data)
 
         except IntegrityError:
             return Response(status=status.HTTP_409_CONFLICT)
 
-        except KeyError:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+        user = UserSerializer(user)
 
-        return Response(
-            {   "id": user.id,
-                "username": user.username,
-                "is_superuser": user.is_superuser,
-                "is_staff": user.is_staff,
-            }, 
-            status=status.HTTP_201_CREATED
-        )
-
+        return Response(user.data, status=status.HTTP_201_CREATED)
 
 
 class LoginView(APIView):
     def post(self, request):
-        username = request.data['username']
-        password = request.data['password']
+        data = request.data
+        user = LoginSerializer(data=data)
+
+        if not user.is_valid():
+            return Response(user.errors, status=status.HTTP_400_BAD_REQUEST)
 
         user = authenticate(
-            username=username, 
-            password=password
+            username=user.validated_data["username"],
+            password=user.validated_data["password"]
         )
 
         if user:

@@ -9,6 +9,7 @@ from rest_framework.permissions import IsAuthenticated
 from ipdb import set_trace
 from django.db import IntegrityError
 from .serializers import UserSerializer, LoginSerializer
+from .permissions import IsStudent, IsInstructor, IsFacilitator
 
 
 class SignupView(APIView):
@@ -53,7 +54,7 @@ class LoginView(APIView):
 
 class ProtectedView(APIView):
     authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsFacilitator]
 
     def get(self, request):
         user = request.user

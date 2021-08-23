@@ -39,7 +39,15 @@ class RetrieveCourseView(APIView):
     permission_classes = [IsInstructor]
     
     def get(self, request, course_id):
-        course = get_object_or_404(Course, id=course_id)
+        try:
+            course =  Course.objects.get(id=course_id)
+
+        except Course.DoesNotExist:
+            return Response(
+                {"errors": "invalid course_id"}, 
+                status=status.HTTP_404_NOT_FOUND
+            )
+
         course = CourseSerializer(course)
 
         return Response(course.data, status=status.HTTP_200_OK)
@@ -81,16 +89,20 @@ class CourseEnrollView(APIView):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
-        queryset = []
+        if type(user_ids) is not list:
+            return Response({"error":"user_ids must be a list"}, status=status.HTTP_400_BAD_REQUEST)
 
+        queryset = []
         for id in user_ids:
             try:
-                User.objects.get(id=id)
+                user = User.objects.get(id=id)
             except User.DoesNotExist:
                 return Response(
                     {"errors": "invalid user_id list"},
-                    status=status.HTTP_400_BAD_REQUEST
+                    status=status.HTTP_404_NOT_FOUND
                 )
+
+        for id in user_ids:
             try:
                 queryset.append(User.objects.get(id=id, is_staff=False, is_superuser=False))
             except User.DoesNotExist:

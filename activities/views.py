@@ -15,6 +15,11 @@ class ActivityView(APIView):
     permission_classes = [IsInstructor | IsFacilitator]
     
     def get(self, request):
+        user = request.user
+
+        if not user.is_staff and not user.is_superuser:
+            return Response(status=status.HTTP_403_FORBIDDEN)
+
         activities = Activity.objects.all()
         activities = ActivitySerializer(activities, many=True)
         
@@ -32,7 +37,10 @@ class ActivityView(APIView):
             activity = Activity.objects.get_or_create(**activity.validated_data)[0]
 
         except IntegrityError:
+            points = activity.validated_data["points"]
             activity = Activity.objects.get(title=activity.validated_data["title"])
+            activity.points = points
+            activity.save()
 
         activity = ActivitySerializer(activity)
 
@@ -101,7 +109,8 @@ class GetSubmissionView(APIView):
         if not user.is_staff and not user.is_superuser:
             submissions = Submission.objects.filter(user_id=user.id)
 
-        submissions = Submission.objects.all()
+        else:
+            submissions = Submission.objects.all()
 
         submissions = SubmissionSerializer(submissions, many=True)
         

@@ -1,0 +1,175 @@
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Operations to perform:
+  Synchronize unmigrated apps: messages, rest_framework, staticfiles
+  Apply all migrations: activities, admin, auth, authtoken, contenttypes, courses, sessions
+Synchronizing apps without migrations:
+  Creating tables...
+    Running deferred SQL...
+Running migrations:
+  Applying contenttypes.0001_initial... OK
+  Applying auth.0001_initial... OK
+  Applying activities.0001_initial... OK
+  Applying activities.0002_auto_20210822_2235... OK
+  Applying activities.0003_activity_submissions... OK
+  Applying activities.0004_alter_activity_title... OK
+  Applying activities.0005_rename_submissions_submission... OK
+  Applying activities.0006_alter_submission_grade... OK
+  Applying activities.0007_alter_submission_grade... OK
+  Applying activities.0008_alter_submission_grade... OK
+  Applying activities.0009_alter_submission_grade... OK
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying contenttypes.0002_remove_content_type_name... OK
+  Applying auth.0002_alter_permission_name_max_length... OK
+  Applying auth.0003_alter_user_email_max_length... OK
+  Applying auth.0004_alter_user_username_opts... OK
+  Applying auth.0005_alter_user_last_login_null... OK
+  Applying auth.0006_require_contenttypes_0002... OK
+  Applying auth.0007_alter_validators_add_error_messages... OK
+  Applying auth.0008_alter_user_username_max_length... OK
+  Applying auth.0009_alter_user_last_name_max_length... OK
+  Applying auth.0010_alter_group_name_max_length... OK
+  Applying auth.0011_update_proxy_permissions... OK
+  Applying auth.0012_alter_user_first_name_max_length... OK
+  Applying authtoken.0001_initial... OK
+  Applying authtoken.0002_auto_20160226_1747... OK
+  Applying authtoken.0003_tokenproxy... OK
+  Applying courses.0001_initial... OK
+  Applying courses.0002_rename_students_course_users... OK
+  Applying sessions.0001_initial... OK
+System check identified no issues (0 silenced).
+test_create_and_login_for_facilitator_account (test_api.TestAccountView) ... ok
+test_create_and_login_for_instructor_account (test_api.TestAccountView) ... ok
+test_create_and_login_for_student_account (test_api.TestAccountView) ... ok
+test_create_two_equals_users (test_api.TestAccountView) ... ok
+test_wrong_credentials_do_not_login (test_api.TestAccountView) ... ok
+test_facilitator_or_instructor_can_create_an_activity (test_api.TestActivityView) ... ok
+test_facilitator_or_instructor_can_edit_a_submission_grade (test_api.TestActivityView) ... ok
+test_facilitator_or_instructor_can_list_activities (test_api.TestActivityView) ... ok
+test_facilitator_or_instructor_can_view_all_submissions (test_api.TestActivityView) ... ok
+test_facilitator_or_instructor_cannot_submity_an_activity (test_api.TestActivityView) ... ok
+test_if_it_is_not_possible_to_create_activities_with_the_same_title (test_api.TestActivityView) ... FAIL
+test_student_can_submit_an_activity (test_api.TestActivityView) ... ok
+test_student_can_view_only_your_submissions (test_api.TestActivityView) ... FAIL
+test_student_cannot_edit_a_submission_grade (test_api.TestActivityView) ... ok
+test_student_cannot_list_activities (test_api.TestActivityView) ... FAIL
+test_students_cannot_create_activities (test_api.TestActivityView) ... ok
+test_anonymous_can_filter_courses (test_api.TestCourseView) ... ok
+test_anonymous_can_list_courses (test_api.TestCourseView) ... ok
+test_anonymous_cannot_filter_invalid_course (test_api.TestCourseView) ... FAIL
+test_create_course_with_invalid_token (test_api.TestCourseView) ... ok
+test_create_two_courses_with_the_same_name_generate_the_same_ids (test_api.TestCourseView) ... ok
+test_enroll_students_with_invalid_id (test_api.TestCourseView) ... FAIL
+test_enrolls_students_with_invalid_course_id (test_api.TestCourseView) ... ok
+test_facilitator_or_student_cannot_create_course (test_api.TestCourseView) ... ok
+test_instructor_can_create_course (test_api.TestCourseView) ... ok
+test_instructor_can_delete_courses (test_api.TestCourseView) ... ok
+test_instructor_can_register_students_on_course (test_api.TestCourseView) ... ok
+test_only_students_can_be_enrolled_in_the_course (test_api.TestCourseView) ... ok
+test_student_or_facilitator_cannot_delete_courses (test_api.TestCourseView) ... ok
+test_whether_a_list_is_entered_to_enroll_students_in_the_course (test_api.TestCourseView) ... ERROR
+
+======================================================================
+ERROR: test_whether_a_list_is_entered_to_enroll_students_in_the_course (test_api.TestCourseView)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/bentz/projects/q4/kanvas/test_api.py", line 381, in test_whether_a_list_is_entered_to_enroll_students_in_the_course
+    response = self.client.put(
+  File "/home/bentz/projects/q4/kanvas/venv/lib/python3.9/site-packages/rest_framework/test.py", line 303, in put
+    response = super().put(
+  File "/home/bentz/projects/q4/kanvas/venv/lib/python3.9/site-packages/rest_framework/test.py", line 213, in put
+    return self.generic('PUT', path, data, content_type, **extra)
+  File "/home/bentz/projects/q4/kanvas/venv/lib/python3.9/site-packages/rest_framework/test.py", line 233, in generic
+    return super().generic(
+  File "/home/bentz/projects/q4/kanvas/venv/lib/python3.9/site-packages/django/test/client.py", line 473, in generic
+    return self.request(**r)
+  File "/home/bentz/projects/q4/kanvas/venv/lib/python3.9/site-packages/rest_framework/test.py", line 285, in request
+    return super().request(**kwargs)
+  File "/home/bentz/projects/q4/kanvas/venv/lib/python3.9/site-packages/rest_framework/test.py", line 237, in request
+    request = super().request(**kwargs)
+  File "/home/bentz/projects/q4/kanvas/venv/lib/python3.9/site-packages/django/test/client.py", line 719, in request
+    self.check_exception(response)
+  File "/home/bentz/projects/q4/kanvas/venv/lib/python3.9/site-packages/django/test/client.py", line 580, in check_exception
+    raise exc_value
+  File "/home/bentz/projects/q4/kanvas/venv/lib/python3.9/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/home/bentz/projects/q4/kanvas/venv/lib/python3.9/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/bentz/projects/q4/kanvas/venv/lib/python3.9/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/bentz/projects/q4/kanvas/venv/lib/python3.9/site-packages/django/views/generic/base.py", line 70, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/bentz/projects/q4/kanvas/venv/lib/python3.9/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/bentz/projects/q4/kanvas/venv/lib/python3.9/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/bentz/projects/q4/kanvas/venv/lib/python3.9/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/bentz/projects/q4/kanvas/venv/lib/python3.9/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/bentz/projects/q4/kanvas/courses/views.py", line 86, in put
+    for id in user_ids:
+TypeError: 'int' object is not iterable
+
+======================================================================
+FAIL: test_if_it_is_not_possible_to_create_activities_with_the_same_title (test_api.TestActivityView)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/bentz/projects/q4/kanvas/test_api.py", line 772, in test_if_it_is_not_possible_to_create_activities_with_the_same_title
+    self.assertDictEqual(activity2.json(), {"id": 1, "title": "activity1", "points": 8, "submissions": []})
+AssertionError: {'id': 1, 'title': 'activity1', 'points': 10, 'submissions': []} != {'id': 1, 'title': 'activity1', 'points': 8, 'submissions': []}
+- {'id': 1, 'points': 10, 'submissions': [], 'title': 'activity1'}
+?                     ^^
+
++ {'id': 1, 'points': 8, 'submissions': [], 'title': 'activity1'}
+?                     ^
+
+
+======================================================================
+FAIL: test_student_can_view_only_your_submissions (test_api.TestActivityView)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/bentz/projects/q4/kanvas/test_api.py", line 1088, in test_student_can_view_only_your_submissions
+    self.assertListEqual(submissions.json(), [{"id": 1, "grade": None, "repo": "http://gitlab.com/submission1", "user_id": 2, "activity_id": 1},
+AssertionError: Lists differ: [{'id': 1, 'repo': 'http://gitlab.com/submission1', '[437 chars]: 3}] != [{'id': 1, 'grade': None, 'repo': 'http://gitlab.com/[140 chars]: 2}]
+
+First list contains 3 additional elements.
+First extra element 2:
+{'id': 3, 'repo': 'http://gitlab.com/submission1', 'grade': None, 'activity_id': 1, 'user_id': 3}
+
+Diff is 649 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_student_cannot_list_activities (test_api.TestActivityView)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/bentz/projects/q4/kanvas/test_api.py", line 848, in test_student_cannot_list_activities
+    self.assertEqual(activities.status_code, 403)
+AssertionError: 200 != 403
+
+======================================================================
+FAIL: test_anonymous_cannot_filter_invalid_course (test_api.TestCourseView)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/bentz/projects/q4/kanvas/test_api.py", line 356, in test_anonymous_cannot_filter_invalid_course
+    self.assertEqual(course_list.json(), {'errors': 'invalid course_id'})
+AssertionError: {'detail': 'Not found.'} != {'errors': 'invalid course_id'}
+- {'detail': 'Not found.'}
++ {'errors': 'invalid course_id'}
+
+======================================================================
+FAIL: test_enroll_students_with_invalid_id (test_api.TestCourseView)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/bentz/projects/q4/kanvas/test_api.py", line 561, in test_enroll_students_with_invalid_id
+    self.assertDictEqual(response.json(), {"errors": "invalid user_id list"})
+AssertionError: {'errors': 'Only students can be enrolled in the course.'} != {'errors': 'invalid user_id list'}
+- {'errors': 'Only students can be enrolled in the course.'}
++ {'errors': 'invalid user_id list'}
+
+----------------------------------------------------------------------
+Ran 30 tests in 14.705s
+
+FAILED (failures=5, errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...

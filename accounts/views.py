@@ -4,12 +4,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth import authenticate
 from rest_framework.authtoken.models import Token
-from rest_framework.authentication import TokenAuthentication
-from rest_framework.permissions import IsAuthenticated
-from ipdb import set_trace
 from django.db import IntegrityError
 from .serializers import UserSerializer, LoginSerializer
-from .permissions import IsStudent, IsInstructor, IsFacilitator
 
 
 class SignupView(APIView):
@@ -50,14 +46,3 @@ class LoginView(APIView):
             return Response({"token": token.key}, status=status.HTTP_200_OK)
 
         return Response({"error": "Invalid username or password"}, status=status.HTTP_401_UNAUTHORIZED)
-
-
-class ProtectedView(APIView):
-    authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated, IsFacilitator]
-
-    def get(self, request):
-        user = request.user
-        print(user.__dict__)
-        
-        return Response({"message": "Welcome"}, status=status.HTTP_200_OK)

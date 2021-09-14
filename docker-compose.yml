@@ -29,10 +29,12 @@ services:
     volumes:
       # diretorio local - diretorio do container
       - .:/code
-    environment:
-      POSTGRES_USER: bentz
-      POSTGRES_PASSWORD: 123
-      POSTGRES_DB: kanvas
+    # environment:
+    #   POSTGRES_USER: bentz
+    #   POSTGRES_PASSWORD: 123
+    #   POSTGRES_DB: kanvas
+    env_file: ./.env
+
     depends_on:
       - postgres
         # condition: service_healthy

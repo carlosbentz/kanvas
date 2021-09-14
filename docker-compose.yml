@@ -1,0 +1,41 @@
+version: "3.8"
+services:
+  postgres:
+    image: postgres:latest
+    env_file: ./.env
+    # environment:
+    #   POSTGRES_USER: bentz
+    #   POSTGRES_PASSWORD: 123
+    #   POSTGRES_DB: kanvas
+    ports:
+      - 5432:5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    # healthcheck:
+    #   test: ["CMD-SHELL", "pg_isready -U postgres"]
+    #   interval: 5s
+    #   timeout: 5s
+    #   retries: 5
+  django:
+    build: .
+    ports: # igual expose
+      # Porta local - Porta do container
+      - 8000:8000
+    command: python manage.py runserver 0.0.0.0:8000
+    entrypoint: ./entrypoint.sh
+    # bash -c 'while !</dev/tcp/db/5432; do sleep 1; done;
+    stdin_open: true #docker run -i
+    tty: true # docker run -t
+    volumes:
+      # diretorio local - diretorio do container
+      - .:/code
+    environment:
+      POSTGRES_USER: bentz
+      POSTGRES_PASSWORD: 123
+      POSTGRES_DB: kanvas
+    depends_on:
+      - postgres
+        # condition: service_healthy
+volumes:
+  pgdata:
+    external: true

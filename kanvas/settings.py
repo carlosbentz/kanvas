@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-b!=-2d_8suwewapcs%d-b)j8t9w#g@z@p*pfyuo*)v%h+##u1m
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["bentz-kanvas.herokuapp.com"]
 
 
 # Application definition

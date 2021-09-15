@@ -1,0 +1,6 @@
+build:
+  docker:
+    web: DockerFile
+
+run:
+  web: python manage.py runserver 0.0.0.0:$PORT
